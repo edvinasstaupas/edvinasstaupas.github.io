@@ -21,7 +21,7 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
-      # Build the Spring Boot project using Maven
+      # Build the Spring Boot project using Gradle
       - name: Build with Maven
         run: gradle clean assemble -p server
 
