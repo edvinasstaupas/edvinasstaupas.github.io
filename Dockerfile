@@ -2,10 +2,10 @@
 FROM openjdk:17-jdk-slim
 
 # Set the working directory in the container
-WORKDIR server
+#WORKDIR server
 
 # Add the Spring Boot JAR file to the container (replace with your JAR file name)
-COPY build/libs/server-0.0.1-SNAPSHOT /app/app.jar
+COPY app.jar /app/app.jar
 
 # Expose port 8079 (or the port your app runs on)
 EXPOSE 8079
