@@ -44,7 +44,7 @@ jobs:
       # Fetch data from the running Spring Boot container
       - name: Fetch data from Spring Boot container
         run: |
-          curl http://localhost:8079 > info.html
+          curl http://localhost:8079 > index.html
 
       # Deploy the info.html to GitHub Pages
       - name: Deploy to GitHub Pages
