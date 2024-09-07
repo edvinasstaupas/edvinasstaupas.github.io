@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple GitHub Page</title>
+    <script>
+        async function fetchData() {
+            try {
+                // Replace 'localhost:8079' with the actual domain for deployment if needed.
+                const response = await fetch('http://localhost:8079');
+                const data = await response.text();
+                document.getElementById('response').innerText = data;
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                document.getElementById('response').innerText = 'Error fetching data';
+            }
+        }
+    </script>
+</head>
+<body onload="fetchData()">
+    <h1>Response from localhost:8079</h1>
+    <p id="response">Loading...</p>
+</body>
+</html>

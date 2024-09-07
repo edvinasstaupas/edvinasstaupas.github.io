@@ -1,0 +1,53 @@
+name: Deploy Spring Boot Docker and Update GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build_and_deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Checkout the repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Set up JDK 17 for building the Spring Boot app
+      - name: Set up JDK 17
+        uses: actions/setup-java@v3
+        with:
+          java-version: '17'
+
+      # Build the Spring Boot project using Maven
+      - name: Build with Maven
+        run: gradle clean assemble -p server
+
+      # Build the Docker image for the Spring Boot app
+      - name: Build Docker image
+        run: docker build -t server .
+
+      # Run the Docker container in the background
+      - name: Run Docker container
+        run: docker run -d -p 8079:8079 --name server server
+
+      # Wait for the container to be ready
+      - name: Wait for container to start
+        run: sleep 10
+
+      # Fetch data from the running Spring Boot container
+      - name: Fetch data from Spring Boot container
+        run: |
+          curl http://localhost:8079 > info.html
+
+      # Deploy the info.html to GitHub Pages
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./
+
+      # Stop and remove the Docker container
+      - name: Clean up Docker container
+        run: docker rm -f server
